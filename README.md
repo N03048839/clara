@@ -1,2 +1,2 @@
 # spine-reader
-A fully autonomous library cataloging device
+A fully autonomous library cataloging device.
