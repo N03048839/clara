@@ -1,3 +1,5 @@
+package spineReader;
+
 import java.io.*;
 import java.awt.Image;
 import java.awt.image.*;
@@ -55,6 +57,9 @@ class AccuracyTest
 		return null;
 	}
 	
+	protected void stop() {
+		
+	}
 	
 	public void run()
 	{
