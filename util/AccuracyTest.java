@@ -4,7 +4,7 @@ import java.awt.image.*;
 import java.util.*;
 import javax.imageio.ImageIO;
 
-class AccuracyTest 
+abstract class AccuracyTest 
 {
 	protected final String IMAGE_DIRECTORY;
 	protected final String ANSWER_FILENAME;
@@ -51,6 +51,9 @@ class AccuracyTest
 		score = new double[size];
 	}
 	
+	abstract protected String ocr(Image);
+	
+	
 	public void run()
 	{
 		print("Starting test...\n");
@@ -77,10 +80,6 @@ class AccuracyTest
 		print(" Algorithm completed with accuracy of: " + avg + "\n");
 	}
 	
-	
-	protected String ocr(Image)
-	{ // ---- All OCR logic goes here
-	}
 	
 	protected int matchingChars(String a, String b)
 	{
