@@ -1,5 +1,3 @@
-package spineReader;
-
 import java.io.*;
 import java.util.*;
 
@@ -144,11 +142,6 @@ class AccuracyTest
 			answerArray[i++] = temp.poll();
 	}
 	
-	private static void showHelpMessage()
-	{
-		System.out.println("HELP MESSAGE");
-	}
-	
 	public void print(String s)
 	{
 		if (!output_suppress)
@@ -202,5 +195,17 @@ class AccuracyTest
 		
 		AccuracyTest a = new AccuracyTest(IMG_DIR, ANS_FN);
 		a.run();
+	}
+	
+	private static void showHelpMessage()
+	{
+		System.out.println("Usage: AccuracyTest [OPTION]... [DIRECTORY]");
+		System.out.println("Test accuracy of OCR algorithms.\n");
+		System.out.println("With no DIRECTORY, use current user working directory.\n");
+		System.out.println("  -S  						supress output");
+		System.out.println("  -v 						display verbose output");
+		System.out.println("  		--help				display this help and exit");
+		System.out.println();
+		System.out.println("More info available online at <https://github.com/N03048839/spine-reader/util>");;
 	}
 }
