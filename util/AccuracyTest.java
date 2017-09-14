@@ -1,10 +1,7 @@
 package spineReader;
 
 import java.io.*;
-import java.awt.Image;
-import java.awt.image.*;
 import java.util.*;
-import javax.imageio.ImageIO;
 
 class AccuracyTest 
 {
@@ -15,8 +12,7 @@ class AccuracyTest
 	static boolean output_verbose = false;
 	static boolean output_suppress = false;
 	
-	protected Image[] imageArray;
-	protected String[] filenameArray;
+	protected File[] imageArray;
 	protected String[] answerArray;
 	protected int[] charsCorrect;
 	protected double[] score;
@@ -53,13 +49,11 @@ class AccuracyTest
 		score = new double[size];
 	}
 	
-	protected String ocr(Image image) {
+	protected String ocr(File image) {
 		return null;
 	}
 	
-	protected void stop() {
-		
-	}
+	protected void stop() {}
 	
 	public void run()
 	{
@@ -67,7 +61,7 @@ class AccuracyTest
 		
 		for (int i = 0; i < this.size; i++) 
 		{
-			printVerbose("   IMG: " + filenameArray[i]);
+			printVerbose("   IMG: " + imageArray[i].getName());
 			charsCorrect[i] = matchingChars(
 							answerArray[i],
 							ocr(imageArray[i])
@@ -108,15 +102,13 @@ class AccuracyTest
 		printVerbose("Directory contents:\n");
 		File[] dirContents = directory.listFiles();
 		
-		Queue<Image> temp = new LinkedList<Image>();
-		Queue<String> fntemp = new LinkedList<String>();
+		Queue<File> temp = new LinkedList<File>();
 		 
 		for (File file : dirContents) 
 		{
 			if (file.isFile()) {
 				printVerbose("      " + file.getName() + "\n");
-				temp.add(ImageIO.read(file));
-				fntemp.add(file.getName());
+				temp.add(file);
 			} 
 			else if (file.isDirectory())
 				printVerbose("[dir] " + file.getName() + "\n");
@@ -124,13 +116,12 @@ class AccuracyTest
 		
 		int img_cnt = temp.size();
 		printVerbose("Scan complete; " + img_cnt + " valid images found\n");
-		imageArray = new Image[img_cnt];
+		imageArray = new File[img_cnt];
 		
 		int i = 0;
 		while (!temp.isEmpty()) 
 		{
-			imageArray[i] = temp.removeFirst();
-			filenameArray[i] = fntemp.poll();
+			imageArray[i] = temp.poll();
 			i++;
 		}
 	}
