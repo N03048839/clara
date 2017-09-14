@@ -4,7 +4,7 @@ import java.awt.image.*;
 import java.util.*;
 import javax.imageio.ImageIO;
 
-abstract class AccuracyTest 
+class AccuracyTest 
 {
 	protected final String IMAGE_DIRECTORY;
 	protected final String ANSWER_FILENAME;
@@ -51,7 +51,9 @@ abstract class AccuracyTest
 		score = new double[size];
 	}
 	
-	abstract protected String ocr(Image);
+	protected String ocr(Image image) {
+		return null;
+	}
 	
 	
 	public void run()
@@ -72,7 +74,7 @@ abstract class AccuracyTest
 		}
 		
 		print("Test complete.  Computing results...\n");
-		double sum, avg;
+		double sum = 0.0, avg;
 		for (int i = 0; i < this.size; i++)
 			sum += score[i];
 		avg = sum / this.size;
@@ -101,14 +103,14 @@ abstract class AccuracyTest
 		printVerbose("Directory contents:\n");
 		File[] dirContents = directory.listFiles();
 		
-		ArrayList<Image> temp = new ArrayList<Image>();
-		ArrayList<String> fntemp = new ArrayList<String>();
+		Queue<Image> temp = new LinkedList<Image>();
+		Queue<String> fntemp = new LinkedList<String>();
 		 
 		for (File file : dirContents) 
 		{
 			if (file.isFile()) {
 				printVerbose("      " + file.getName() + "\n");
-				temp.add(ImageIO.read(dirContents));
+				temp.add(ImageIO.read(file));
 				fntemp.add(file.getName());
 			} 
 			else if (file.isDirectory())
@@ -122,7 +124,7 @@ abstract class AccuracyTest
 		int i = 0;
 		while (!temp.isEmpty()) 
 		{
-			imageArray[i] = temp.poll();
+			imageArray[i] = temp.removeFirst();
 			filenameArray[i] = fntemp.poll();
 			i++;
 		}
@@ -132,7 +134,7 @@ abstract class AccuracyTest
 	{
 		printVerbose("\nOpening answer file: " + ANS_FN + "\n");
 		Scanner infile = new Scanner(ANS_FN);
-		ArrayList<String> temp = new ArrayList<String>();
+		Queue<String> temp = new LinkedList<String>();
 		while (infile.hasNextLine())
 			temp.add(infile.nextLine());
 		infile.close();
@@ -146,7 +148,7 @@ abstract class AccuracyTest
 			answerArray[i++] = temp.poll();
 	}
 	
-	private void showHelpMessage()
+	private static void showHelpMessage()
 	{
 		System.out.println("HELP MESSAGE");
 	}
@@ -157,7 +159,7 @@ abstract class AccuracyTest
 			System.out.print(s);
 	}
 	
-	public void verbosePrint(String s)
+	public void printVerbose(String s)
 	{
 		if (output_verbose)
 			print(s);
@@ -165,7 +167,7 @@ abstract class AccuracyTest
 	
 	public static void main(String[] args)
 	{
-		String IMG_DIR, ANS_FN;
+		String IMG_DIR = null, ANS_FN = null;
 		
 		// --- Stores user's working directory
 		final String RUN_DIR = System.getProperty("user.dir");
@@ -187,7 +189,7 @@ abstract class AccuracyTest
 				}
 				
 				// --- Specify new answer file
-				if (args[i-1].matches("--ans")
+				if (args[i-1].matches("--ans"))
 					ANS_FN = args[i];
 				else
 					ANS_FN = RUN_DIR + ANS_FN_DEF;
@@ -202,16 +204,7 @@ abstract class AccuracyTest
 			}
 		}
 		
-		
-		AccuracyTest a;
-		try {
-			a = new AccuracyTest(IMG_DIR, ANS_FN);
-		} catch (IOException e) {
-			System.out.println(e.getMessage();
-			e.printStackTrace();
-			System.exit(1);
-		}
-		
+		AccuracyTest a = new AccuracyTest(IMG_DIR, ANS_FN);
 		a.run();
 	}
 }
