@@ -1,0 +1,7 @@
+This is an example of OCR
+A Extended form which
+can be captured as data
+from paper forms and
+documents by HurrayData
+Ltd (muse H13 533)
+
