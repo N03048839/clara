@@ -33,7 +33,7 @@ public class OpenCVTest
           Mat image = Imgcodecs.imread(filename);
           
           // --- sandbox: test code goes here
-          displayImage(Mat2BufferedImage(image), "original");
+          //displayImage(Mat2BufferedImage(image), "original");
           
           int bf = 7;
           
@@ -53,37 +53,51 @@ public class OpenCVTest
           Core.add(image, cannyColor, cannyOv);
           //displayImage(Mat2BufferedImage(cannyOv), "canny overlay");
           
-          Mat hough = getHoughTransform(canny, 1.0, (Math.PI + (Math.PI / 2)), 1);
+          double VERTICAL = Math.PI + (Math.PI / 2);
+          double HORIZONTAL = Math.PI;
+          double ALL = Math.PI / 180;
           
-          Mat houghColor = hough.clone();
+          Mat hough = getHoughTransform(canny, 1.0, ALL, 1);
+          
           Mat houghOv = canny.clone();
-          displayImage(Mat2BufferedImage(houghColor), "hough");
-          Core.add(image, houghColor, houghOv);
+          displayImage(Mat2BufferedImage(hough), "hough");
+          Core.add(image, hough, houghOv);
           
           //displayImage(Mat2BufferedImage(houghOv), "hough overlay");
-          writeMat(houghColor, filename + "_hough.jpg");
+          //writeMat(hough, filename + "_hough.jpg");
           
       }
    }
    
    
    /** 
-    * Get a Hough lines for the current image.
+    * Get a set of Hough lines for the current image.
     * @param image The image to scan
-    * @param rho 
-    * @param theta The angle (in rads) of the desired Hough lines
-    * @param threshold The number of points needed to constitute a line
+    * @param rho Resolution of Rho, in pixels.
+    * 
+    * 				Rho corresponds to a line between the origin (upper left)
+    * 				and the resultant Hough line, with which it forms a right angle.
+    * 				Rho is the length of this line.
+    * 				
+    * @param theta Resolution of Theta, in radians.
+    * 
+    * 				Theta corresponds to a line between the origin (upper left)
+    * 				and the resultant Hough line, with which it forms a right angle.
+    * 				Theta is the angle between this line and the horizontal.
+    * 
+    * @param threshold The number of matches in Hough space needed to constitute a line
     * @return
     */
    public static Mat getHoughPTransform(Mat image, double rho, double theta, int threshold) {
 	    
+	   System.out.println("   Running Hough Pred. Transform...");
 	   Mat result = image.clone();								// initialize 'result'
 	   Imgproc.cvtColor(image, result, Imgproc.COLOR_GRAY2BGR); // change type of 'result' to color
 	    
-	   Mat lines = image.clone();								
+	   Mat lines = new Mat();								
 	   Imgproc.HoughLinesP(image, lines, rho, theta, threshold);
 	    
-	    
+	    System.out.println("      Lines found: " + lines.cols());
 	    for (int i = 0; i < lines.cols(); i++) {
 	        double[] val = lines.get(0, i);
 	        Imgproc.line(result, new Point(val[0], val[1]), new Point(val[2], val[3]), new Scalar(0, 0, 255), 2);
@@ -91,12 +105,33 @@ public class OpenCVTest
 	    return result;
 	}
    
+   
+   /** 
+    * Get a set of Hough lines for the current image.
+    * @param image The image to scan
+    * @param rho Resolution of Rho, in pixels.
+    * 
+    * 				Rho corresponds to a line between the origin (upper left)
+    * 				and the resultant Hough line, with which it forms a right angle.
+    * 				Rho is the length of this line.
+    * 				
+    * @param theta Resolution of Theta, in radians.
+    * 
+    * 				Theta corresponds to a line between the origin (upper left)
+    * 				and the resultant Hough line, with which it forms a right angle.
+    * 				Theta is the angle between this line and the horizontal.
+    * 
+    * @param threshold The number of matches in Hough space needed to constitute a line
+    * @return
+    */
    public static Mat getHoughTransform(Mat image, double rho, double theta, int threshold) {
+	   System.out.println("   Running Hough Transform...");
 	    Mat result = image.clone();
 	    Imgproc.cvtColor(image, result, Imgproc.COLOR_GRAY2BGR);
 	    Mat lines = new Mat();
 	    Imgproc.HoughLines(image, lines, rho, theta, threshold);
 
+	    System.out.println("      Lines found: " + lines.cols());
 	    for (int i = 0; i < lines.cols(); i++) {
 	        double data[] = lines.get(0, i);
 	        double rho1 = data[0];
