@@ -53,15 +53,14 @@ public class OpenCVTest
           Core.add(image, cannyColor, cannyOv);
           //displayImage(Mat2BufferedImage(cannyOv), "canny overlay");
           
-          double VERTICAL = Math.PI + (Math.PI / 2);
-          double HORIZONTAL = Math.PI;
-          double ALL = Math.PI / 180;
-          
-          Mat hough = getHoughTransform(canny, 1.0, ALL, 1);
+          Mat hough = getHoughTransform(canny, 
+        		  (Math.PI / 3), 
+        		  ((2 * Math.PI) / 3)
+        		  );
           
           Mat houghOv = canny.clone();
           displayImage(Mat2BufferedImage(hough), "hough");
-          Core.add(image, hough, houghOv);
+         // Core.add(image, hough, houghOv);
           
           //displayImage(Mat2BufferedImage(houghOv), "hough overlay");
           //writeMat(hough, filename + "_hough.jpg");
@@ -124,12 +123,27 @@ public class OpenCVTest
     * @param threshold The number of matches in Hough space needed to constitute a line
     * @return
     */
-   public static Mat getHoughTransform(Mat image, double rho, double theta, int threshold) {
+   public static Mat getHoughTransform(Mat image, double minTheta, double maxTheta) {
+	   double RHO_RESOLUTION = 1.0;
+	   
+	   double THETA_VERT = Math.PI + (Math.PI / 2);		// Only check vert lines
+	   double THETA_HORZ = Math.PI;						// Only check horiz lines
+       double THETA_ALL = Math.PI / 180;				// Check all lines (1 degree resolution)
+	   
 	   System.out.println("   Running Hough Transform...");
-	    Mat result = image.clone();
+	    Mat result = new Mat(image.size(), image.type());
 	    Imgproc.cvtColor(image, result, Imgproc.COLOR_GRAY2BGR);
 	    Mat lines = new Mat();
-	    Imgproc.HoughLines(image, lines, rho, theta, threshold);
+	    
+	    Imgproc.HoughLines(image, lines, 
+	    		RHO_RESOLUTION, 						// resolution of rho in pixels
+	    		THETA_ALL, 								// resolution of theta in rads
+	    		1, 										// threshold of line detection
+	    		0, 0, 									// zero by default
+	    		minTheta + (Math.PI / 2),	 			// Minimum angle. PI/2 needs to be added for some reason
+	    		maxTheta + (Math.PI / 2)				// Maximum angle  PI/2 needs to be added for some reason
+	    		);
+	    
 
 	    System.out.println("      Lines found: " + lines.cols());
 	    for (int i = 0; i < lines.cols(); i++) {
