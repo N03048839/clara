@@ -33,25 +33,25 @@ public class OpenCVTest
           Mat image = Imgcodecs.imread(filename);
           
           // --- sandbox: test code goes here
-          //displayImage(Mat2BufferedImage(image), "original");
+          //displayImage(image, "original");
           
           int bf = 7;
           
           Mat blur = blur(image, bf, 1.3);
-          //displayImage(Mat2BufferedImage(blur), "blur");
+          //displayImage(blur, "blur");
           
           Mat blurgs = blur.clone();
           //Imgproc.cvtColor(blur, blurgs, Imgproc.COLOR_BGR2GRAY);
-          //displayImage(Mat2BufferedImage(blurgs), "threshold");
+          //displayImage(blurgs, "threshold");
           
           Mat canny = canny(blurgs, 80, 60);
-          //displayImage(Mat2BufferedImage(canny), "canny");
+          //displayImage(canny, "canny");
           
           Mat cannyColor = canny.clone();
           Imgproc.cvtColor(canny, cannyColor, Imgproc.COLOR_GRAY2BGR);
           Mat cannyOv = canny.clone();
           Core.add(image, cannyColor, cannyOv);
-          //displayImage(Mat2BufferedImage(cannyOv), "canny overlay");
+          //displayImage(cannyOv, "canny overlay");
           
           Mat hough = getHoughTransform(canny, 
         		  (Math.PI / 3), 
@@ -59,11 +59,11 @@ public class OpenCVTest
         		  );
           
           Mat houghOv = canny.clone();
-          displayImage(Mat2BufferedImage(hough), "hough");
+          displayImage(hough, "hough");
          // Core.add(image, hough, houghOv);
           
-          //displayImage(Mat2BufferedImage(houghOv), "hough overlay");
-          //writeMat(hough, filename + "_hough.jpg");
+          //displayImage(houghOv, "hough overlay");
+          //writeImage(hough, filename + "_hough.jpg");
           
       }
    }
@@ -162,6 +162,16 @@ public class OpenCVTest
 	}
    
    
+   /**
+    * Runs a Canny Edge detection on the given image.
+    * @param image	The image that will be scanned
+    * @param thr1	The upper threshold.
+    * 				Points brighter than this are automatically selected as edges.
+    * @param thr2	The lower threshold.
+    * 				Points brighter than this selected as edges only if they 
+    * 				connect to existing edges. Points dimmer are discarded.
+    * @return		A Mat containing the transformed image
+    */
    public static Mat canny(Mat image, double thr1, double thr2) {
 	   Mat dest = image.clone();
 	   Imgproc.Canny(image, dest, thr1, thr2, 3, true);
@@ -169,6 +179,13 @@ public class OpenCVTest
    }
    
    
+   /**
+    * Runs a Gaussian Blur on the given image.
+    * @param image	The image to be blurred
+    * @param ksize	Size of the Gaussian filter. This MUST be an odd number
+    * @param sigma	Standard deviation allowed for input values
+    * @return
+    */
    public static Mat blur(Mat image, int ksize, double sigma) {
 	   Mat dest = image.clone();
 	   Size size = new Size(ksize, ksize);
@@ -177,6 +194,11 @@ public class OpenCVTest
    }
    
    
+   /**
+    * Convert a Mat to a BufferedImage.
+    * @param m
+    * @return
+    */
    public static BufferedImage Mat2BufferedImage(Mat m){
 	// source: http://answers.opencv.org/question/10344/opencv-java-load-image-to-gui/
 	// Fastest code
@@ -197,6 +219,11 @@ public class OpenCVTest
 	}
    
    
+   /**
+    * Display a window containing the image.
+    * @param img2
+    * @param title
+    */
    public static void displayImage(Image img2, String title)
    {   
        //BufferedImage img=ImageIO.read(new File("/HelloOpenCV/lena.png"));
@@ -213,14 +240,31 @@ public class OpenCVTest
 
    }
    
-   public static void displayMat(Mat image, String title) {
+   
+   /**
+    * Display a window containing the image.
+    * @param image
+    * @param title
+    */
+   public static void displayImage(Mat image, String title) {
 	   displayImage(Mat2BufferedImage(image), title);
    }
    
-   public static void writeMat(Mat image, String filename) {
+   
+   /**
+    * Write the image to file.
+    * @param image
+    * @param filename
+    */
+   public static void writeImage(Mat image, String filename) {
 	   Imgcodecs.imwrite(filename, image);
    }
    
+   
+   /**
+    * List the names of all files in the running directory.
+    * @return
+    */
    public static String[] listFileNames() {
 	   String path = System.getProperty("user.dir");
 	   
