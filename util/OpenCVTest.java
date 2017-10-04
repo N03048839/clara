@@ -18,40 +18,41 @@ import org.opencv.imgproc.*;
 
 import java.math.*;
 
+
+/**
+ * This file is used for testing simple image recogition techniques using the open-source
+ * OpenCV computer vision library.
+ */
 public class OpenCVTest
-{
-	static String filename = "spines9.jpg";
-	
+{	
+
    public static void main( String[] args ) throws IOException
    {
       System.out.println("Loading library...");
 	  System.loadLibrary( Core.NATIVE_LIBRARY_NAME );
       
+      /* Run contents of this loop once for each file in current directory. */
       for (String filename : listFileNames())
       {
     	  System.out.println("loading " + filename + " with opencv...");
-          Mat image = Imgcodecs.imread(filename);
+          Mat image = Imgcodecs.imread(filename); // <-- The original image, as read from file
           
           // --- sandbox: test code goes here
-          //displayImage(image, "original");
+          //displayImage(image, "Original Image: " + filename);
           
-          int bf = 7;
-          
+	      
+          int bf = 7;	// Size of pixel matrix used for blur operation. MUST be odd. 7 seems to work best.
           Mat blur = blur(image, bf, 1.3);
-          //displayImage(blur, "blur");
+          //displayImage(blur, "Blurred Image: " + filename);
           
-          Mat blurgs = blur.clone();
-          //Imgproc.cvtColor(blur, blurgs, Imgproc.COLOR_BGR2GRAY);
-          //displayImage(blurgs, "threshold");
-          
-          Mat canny = canny(blurgs, 80, 60);
-          //displayImage(canny, "canny");
+          Mat canny = canny(blur, 80, 60);
+          //displayImage(canny, "Image Edges: " + filename);
           
           Mat cannyColor = canny.clone();
           Imgproc.cvtColor(canny, cannyColor, Imgproc.COLOR_GRAY2BGR);
           Mat cannyOv = canny.clone();
           Core.add(image, cannyColor, cannyOv);
-          //displayImage(cannyOv, "canny overlay");
+          //displayImage(cannyOv, "Edge Overlay: " + filename);
           
           Mat hough = getHoughTransform(canny, 
         		  (Math.PI / 3), 
@@ -59,10 +60,10 @@ public class OpenCVTest
         		  );
           
           Mat houghOv = canny.clone();
-          displayImage(hough, "hough");
+          displayImage(hough, "Hough (boundary) Lines: " + filename);
          // Core.add(image, hough, houghOv);
           
-          //displayImage(houghOv, "hough overlay");
+          //displayImage(houghOv, "Boundary Line Overlay: " + filename);
           //writeImage(hough, filename + "_hough.jpg");
           
       }
