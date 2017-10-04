@@ -8,7 +8,9 @@ This software is intended to be used by libraries that need help keeping track o
 </i>
 <br><br><h3>Project Structure</h3><br>
 <ul><li>
-<ul><li><b>files</b></li><li>used as temporary storage for files the program operates on.</li></ul>
+<ul style="list-style-type: none;"><li><b>files</b></li><li>used as temporary storage for files the program operates on.</li></ul>
 </li><li>
-<ul><li><b>scripts</b></li><li>stores all scripting files.</li></ul>
+<ul style="list-style-type: none;"><li><b>scripts</b></li><li>stores all scripting files.</li></ul>
+</li><li>
+<ul style="list-style-type: none;"><li><b>util</b></li><li>Extra utilities, mostly for debugging</li></ul>
 </li></ul>
