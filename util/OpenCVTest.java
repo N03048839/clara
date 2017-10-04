@@ -1,16 +1,10 @@
 package spineReader;
 
-import java.awt.FlowLayout;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
+import java.awt.*;
+import java.awt.image.*;
+import java.io.*;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.*;
 
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
