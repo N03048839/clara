@@ -37,7 +37,7 @@ public class OpenCVTest
     	  System.out.println("loading " + filename + " with opencv...");
           Mat image = Imgcodecs.imread(filename); // <-- The original image, as read from file
           
-          // --- sandbox: test code goes here
+          // ====== sandbox: test code goes below here ======
           //displayImage(image, "Original Image: " + filename);
           
 	      
@@ -45,29 +45,34 @@ public class OpenCVTest
           Mat blur = blur(image, bf, 1.3);
           //displayImage(blur, "Blurred Image: " + filename);
           
+	  // -- Detect image eges --
           Mat canny = canny(blur, 80, 60);
           //displayImage(canny, "Image Edges: " + filename);
           
-          Mat cannyColor = canny.clone();
-          Imgproc.cvtColor(canny, cannyColor, Imgproc.COLOR_GRAY2BGR);
-          Mat cannyOv = canny.clone();
-          Core.add(image, cannyColor, cannyOv);
+	  // -- Display image edges on original image -- //
+          Mat cannyColor = canny.clone();		// <-- Prepare destination for color conversion
+          Imgproc.cvtColor(canny, cannyColor, Imgproc.COLOR_GRAY2BGR); // Convert grey image to color space
+          Mat cannyOv = canny.clone();			// <-- Prepare destination for overlay
+          Core.add(image, cannyColor, cannyOv);		// <-- Overlay edges onto image copy
           //displayImage(cannyOv, "Edge Overlay: " + filename);
           
+	  // -- Detect Book spine boundaries -- //
           Mat hough = getHoughTransform(canny, 
         		  (Math.PI / 3), 
         		  ((2 * Math.PI) / 3)
         		  );
           
-          Mat houghOv = canny.clone();
+          Mat houghOv = canny.clone();	// <-- Prepare destination for overlay
           displayImage(hough, "Hough (boundary) Lines: " + filename);
-         // Core.add(image, hough, houghOv);
-          
+          //Core.add(image, hough, houghOv);	// <-- Overlay boundary lines onto image copy
           //displayImage(houghOv, "Boundary Line Overlay: " + filename);
+	      
+	  // ---- Write output image to file ---- //    
           //writeImage(hough, filename + "_hough.jpg");
           
       }
    }
+	
    
    
    /** 
