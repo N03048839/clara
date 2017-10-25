@@ -1,5 +1,5 @@
-# spine-reader
-<h4>A fully autonomous library cataloging device.</h4><br><br>
+#### spine-reader
+A fully autonomous library cataloging device.
 ### Introduction
 
 For years, libraries have been seen as centers of knowledge within our culture. Long before search engines, one could visit a library to access a wealth of information on any given topic.  In the age of the internet, however, the relatively slow speed of access to this information has created the need for many libraries to utilize new technologies to streamline the book search process.
