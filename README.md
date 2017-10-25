@@ -34,7 +34,7 @@ This software is intended to be used by libraries that need help keeping track o
   
   Once you write the OS to the card, plug in your keyboard, mouse, and monitor, and boot your Pi.
 * Setup the Pi environment by running `sudo raspi-config` from a terminal:
-  * Your keystrokes might produce unexpected character input; you'll have to set the keyboard localization.
+  * Your keystrokes might produce unexpected character input. Set the proper keyboard localization to fix this.
   * Raspbian can't access all of the card's storage space by default; you'll have to expand it manually.
   * By default, Raspbian blocks all incoming SSH traffic. If you want to work remotely, you'll have to enable SSH connections.
 * Connect to the internet
