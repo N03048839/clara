@@ -30,7 +30,7 @@ This software is intended to be used by libraries that need help keeping track o
 #### Provision Pi
   This guide is written with the use of [Raspbian](https://www.raspberrypi.org/downloads/raspbian/) in mind. You should be able to use another linux-based OS if you want, but configuring other systems is out of the scope of this guide. It's suggested that you use the Raspbian desktop environment; you _can_ run the Pi headless (shell environment only), but you won't be able to use all of the image debugging tools which display images on screen.
   
-  [A lot of good guides](https://www.raspberrypi.org/documentation/installation/installing-images/README.md) exist for installing Raspbian onto an sd card, so I won't reiterate how to do this in detail here. [Etcher](https://etcher.io/) is a great utility, but if you're working in a linux environment you could always use `df`.
+  [A lot of good guides](https://www.raspberrypi.org/documentation/installation/installing-images/README.md) exist for installing Raspbian onto an sd card, so I won't reiterate in detail how to do this here. [Etcher](https://etcher.io/) is a great utility, but if you're working in a linux environment you could always use `df`.
   
   Once you write the OS to the card, plug in your keyboard, mouse, and monitor, and boot your Pi.
 * Setup the Pi environment by running `sudo raspi-config` from a terminal:
