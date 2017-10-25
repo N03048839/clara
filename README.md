@@ -11,9 +11,9 @@ This software is intended to be used by libraries that need help keeping track o
 
 | folder   | description   |
 | ---------| --------------|
-| files    | Used as temporary storage for files the program operates on |
-| scripts  | Stores all scripting files. |
-| util     | Extra utilities, mostly for debugging |
+| */files/*  | Used as temporary storage for files the program operates on |
+| */scripts/*| Stores all scripting files. |
+| */util/*   | Extra utilities, mostly for debugging |
 
 ### Setup
 #### Materials Needed
@@ -44,7 +44,11 @@ This software is intended to be used by libraries that need help keeping track o
   At this point you should be connected to the internet. You can do the rest of the setup remotely if you want, using `ssh` (linux/mac) or [Putty](http://www.putty.org/) (windows). Keep in mind, though, that several of the image debugging tools in this software use GUI output, so having a remote desktop utility like [VNC](https://www.raspberrypi.org/documentation/remote-access/vnc/) can be handy.
   
 #### Install Software
-As with any fresh linux install you should start by updating your environment with `sudo apt-get update` and `sudo apt-get upgrade`.
+As with any fresh linux install you should start by updating your environment.
+```bash
+sudo apt-get update
+sudo apt-get upgrade
+```
 
 ### Usage
 
