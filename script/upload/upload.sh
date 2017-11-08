@@ -25,13 +25,12 @@ HOST=""
 USER=""
 PASSWORD=""
 DB_NAME=""
+TABLE="UploadTest"
 
 
 # --- Query database
 echo "Querying database..."
-mysql --host=$HOST --user=$USER --password=$PASSWORD $DB_NAME << EOF
-insert into UploadTest values('$filename','$infile');
-EOF
+mysql -h$HOST -u$USER -p$PASSWORD -e'insert into UploadTest values('$filename','$infile');' $DB_NAME 
 
 
 # --- Removal of label file

@@ -31,8 +31,8 @@ echo "Output saved to $IMAGE.txt"
 
 
 # --- Remove processed image ---
-echo "Removing processed image..."
-sudo rm $FILE_DIR/$IMAGE
+#echo "Removing processed image..."
+#sudo rm $FILE_DIR/$IMAGE
 
 
 # --- Display OCR output
