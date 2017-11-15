@@ -51,16 +51,18 @@ def loadImage(imagename):
 	cv2.waitKey(0)
 	return image
 
+def main():
+	# construct the argument parse and parse the arguments
+	ap = argparse.ArgumentParser()
+	ap.add_argument("-v", "--verbose", action="store_true", help="show extended output")
+	ap.add_argument("image", nargs="+",
+		help="path to the input image")
+	args = vars(ap.parse_args())
+	VERB_OUTPUT = args["verbose"]
+
+	for image in args["image"]:
+		histogramAnal(loadImage(image))
 
 
-
-# construct the argument parse and parse the arguments
-ap = argparse.ArgumentParser()
-ap.add_argument("-v", "--verbose", action="store_true", help="show extended output")
-ap.add_argument("image", nargs="+",
-	help="path to the input image")
-args = vars(ap.parse_args())
-VERB_OUTPUT = args["verbose"]
-
-for image in args["image"]:
-	histogramAnal(loadImage(image))
+if __name__ == __main__:
+	main()
