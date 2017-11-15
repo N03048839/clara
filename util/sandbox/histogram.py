@@ -1,3 +1,5 @@
+import sys
+import os
 import argparse
 import cv2
 import imutils
@@ -6,7 +8,9 @@ import numpy as np
 VERB_OUTPUT = False
 MAX_WIDTH = 500	   # images larger than this are downscaled to be this size
 
-
+### Plot the image's histogram.
+ #  
+###
 def histogramAnal(image):
 	BRIGHT_MAX = 256
 	BRIGHT_MIN = 100
@@ -16,13 +20,40 @@ def histogramAnal(image):
 	
 	return
 	
+### Maximise the image's dynamic range. 
+ #  Uses a flat transform algorithm.
+###	
+def equalizeHist(image):
+	hist,bins = np.histogram(image.flatten(),256,[0,256])
+	
+	cdf = hist.cumsum()
+	cdf_normalized = cdf * hist.max() / cdf.max()
+	
+	cdf_m = np.ma.masked_equal(cdf,0)
+	cdf_m = (cdf_m - cdf_m.min())*255/(cdf_m.max()-cdf_m.min())
+	cdf = np.ma.filled(cdf_m,0).astype('uint8')
+	img2 = cdf[image]
+	
+	return img2
+	
+### Maximise the image's dynamic range.
+ #  Uses a smart adaptive eq algorithm.
+###
+def equalizeHistCLAHE(image):
+	clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
+	cl1 = clahe.apply(img)
+	
+	return cl1
 	
 def printlim(string):
 	if VERB_OUTPUT:
 		 print(string)
 	return
 	
-	
+
+### Load a given image, and resize if necessary
+ # 	
+###
 def loadImage(imagename):
 	# load the image and resize it to a smaller factor so that
 	# the shapes can be approximated better
