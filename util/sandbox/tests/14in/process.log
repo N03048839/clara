@@ -1,0 +1,24 @@
+
+========= Image: /home/pi/spine-reader/util/sandbox/tests/14in/14in.jpg =====
+ - Loading image...
+ - Loading image...done
+     [W: 4032  H: 3024]
+ - Resizing image...
+ - Resizing image...done
+      [W: 500  H: 375]
+SHOWIMAGE: image display disabled
+ - Converting to greyscale...
+ - Converting to greyscale...done
+ - Performing Gaussian blur... [filter size: 5px]
+ - Performing Gaussian blur...done
+ - Thresholding... [thresh: 150/255]
+ - Thresholding...done
+ - Detecting contours...
+ - Detecting contours...done [found: 109]
+SHOWIMAGE: image display disabled
+ - Writing output to file 'cropped1.png'...
+ - Writing output to file...done
+
+real	1m13.822s
+user	1m20.290s
+sys	0m8.820s
