@@ -1,4 +1,4 @@
-# spine-reader
+# CLARA: Call-number Label Recognition and Analysis
 A fully autonomous library cataloging device.
 ## Introduction
 
@@ -50,6 +50,7 @@ sudo apt-get update
 sudo apt-get upgrade
 ```
 
+Next you'll need to install OpenCV, the [open-source computer vision library](http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_setup/py_intro/py_intro.html) on which Spine-Reader is built. It runs natively in C++, but bindings exist to use the library with other languages.  This is a somewhat complex and process, as you'll have to compile the library yourself in order to use its Python bindings.
 ## Usage
 
 
