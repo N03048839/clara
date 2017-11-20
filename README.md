@@ -1,4 +1,4 @@
-# CLARA: Call-number Label Recognition and Analysis
+# Call-number Label Recognition and Analysis
 A fully autonomous library cataloging device.
 ## Introduction
 
