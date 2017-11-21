@@ -50,9 +50,14 @@ sudo apt-get update
 sudo apt-get upgrade
 ```
 
-Next you'll need to install OpenCV, the [open-source computer vision library](http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_setup/py_intro/py_intro.html) on which Spine-Reader is built. It runs natively in C++, but bindings exist to use the library with other languages.  This is a somewhat complex and process, as you'll have to compile the library yourself in order to use its Python bindings.
+Next you'll need to install OpenCV, the [open-source computer vision library](http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_setup/py_intro/py_intro.html) on which Spine-Reader is built. It runs natively in C++, but bindings exist to use the library with other languages.  This is a somewhat complex and process, as you'll have to compile the library yourself in order to use its Python bindings. 
+
+[This](https://www.pyimagesearch.com/2017/09/04/raspbian-stretch-install-opencv-3-python-on-your-raspberry-pi/) is by far the best tutorial I've found for downloading and installing OpenCV. Note that this takes a LONG time -- my pi clocked seven hours for the compile alone. Be patient, and don't skip any steps, as environment mistakes *will* cause compilation to fail partway (i.e. several hours) through. If you normally use it, disable overclocking as it can cause compilation issues. Follow the guide for Python 3.
+
+Th
+
 ## Usage
 
 
 ## Further Information
-</i>This section will be expanded as time allows.</i>
+
