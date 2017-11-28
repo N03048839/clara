@@ -57,7 +57,7 @@ Next you'll need to install OpenCV, the [open-source computer vision library](ht
 Th
 
 ## Usage
-
+From the command line, run `clara.sh`.
 
 ## Further Information
 
