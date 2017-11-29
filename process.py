@@ -1,6 +1,5 @@
 # import the necessary packages
 from labeldetector import LabelDetector
-from histogram import Histogram as Hist
 import argparse
 import imutils
 import cv2
