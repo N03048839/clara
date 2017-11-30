@@ -28,7 +28,7 @@ done
 
 
 # --- perform OCR on each processed label
-labels=$(ls -R1 $LABEL_DIR | grep ".png")
+labels=$(ls -1 $LABEL_DIR | grep ".png")
 for label in $labels
 do
 	echo " === Analyzing image $LABEL_DIR/$label..."
