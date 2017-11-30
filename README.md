@@ -6,6 +6,16 @@ For years, libraries have been seen as centers of knowledge within our culture. 
 
 This software is intended to be used by libraries that need help keeping track of their book locations.  It will take images of bookshelves using a USB camera. It will then read the call numbers of each book in the picture. Based on the tags it reads, it will then verify that the books are either in the right order or in the right location. The program will notify the user about any books being in the wrong place as it finds them. To start with, however, we will have the program read the tag and provide the text file of that tag. With this text file we can then look at a database and have the program tell us what book that is.
 
+### Requirements
+ - [python 3](https://www.python.org/)
+ - [OpenCV](https://opencv.org/): open-source computer vision library.
+ - [Tesseract](https://en.wikipedia.org/wiki/Tesseract_(software)): open-source optical character recognition (OCR) software.
+ - [numpy](http://www.numpy.org/): used for optimized matrix operations on images
+ - [matplotlib](https://matplotlib.org/): used for displaying image histograms
+ - [imutils](https://github.com/jrosebr1/imutils): used for resizing images
+
+## Usage
+From the command line, run `clara.sh`.
 
 ## Project Structure
 
@@ -55,9 +65,6 @@ Next you'll need to install OpenCV, the [open-source computer vision library](ht
 [This](https://www.pyimagesearch.com/2017/09/04/raspbian-stretch-install-opencv-3-python-on-your-raspberry-pi/) is by far the best tutorial I've found for downloading and installing OpenCV. Note that this takes a LONG time -- my pi clocked seven hours for the compile alone. Be patient, and don't skip any steps, as environment mistakes *will* cause compilation to fail partway (i.e. several hours) through. If you normally use it, disable overclocking as it can cause compilation issues. Follow the guide for Python 3.
 
 Th
-
-## Usage
-From the command line, run `clara.sh`.
 
 ## Further Information
 
