@@ -31,7 +31,9 @@ def printverb(string):
 def showImage(image, title):
 	if SHOW_IMAGE:	
 		printstd('SHOWIMAGE: displaying image ' + title)
-		cv2.imshow(title, image)
+		w = 200 if image.shape[0] > 200 else image.shape[0]
+		imresize = imutils.resize(image, width=w)
+		cv2.imshow(title, imresize)
 		cv2.waitKey(0)			# Pause for any keystroke
 		cv2.destroyAllWindows()	# Close existing opencv windows
 	return
@@ -40,12 +42,16 @@ def loadimage(imagename):
 	printstd("\n========= Image: %s =====" % imagename)
 	printverb(" - Loading image...")
 	image = cv2.imread(imagename)
-	printverb(" - Loading image...done")
-	width_org = image.shape[1]	# OpenCV uses row, column coords
-	height_org = image.shape[0]	# OpenCV uses row, column coords
-	printverb("     [W: " + str(width_org)
-		+ "  H: " + str(height_org) + "]")
-
+	try:
+		width_org = image.shape[1]	# OpenCV uses row, column coords
+		height_org = image.shape[0]	# OpenCV uses row, column coords
+		printverb(" - Loading image...done")
+		printverb("     [W: " + str(width_org)
+			+ "  H: " + str(height_org) + "]")
+	except AttributeError:
+		raise IOError("Image " + imagename + " load error!")
+		
+	
 	if (width_org > MAX_WIDTH) and NORESIZE:
 		printverb (" - Resizing image...")
 		resized = imutils.resize(image, width=MAX_WIDTH)

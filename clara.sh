@@ -3,15 +3,15 @@
 PROJECT_DIR="/home/pi/clara"
 
 # --- Stores location of input (bookshelf) image directory --
-IMG_DIR=$PROJECT_DIR/files/images
+IMG_DIR="$PROJECT_DIR/"
 echo "Image dir: $IMG_DIR"
 
 # --- Stores location of call number image directory ---
-LABEL_DIR=$PROJECT_DIR/files/labels
+LABEL_DIR="$PROJECT_DIR/files/labels"
 echo "File dir: $LABEL_DIR"
 
 # --- Stores location of ocr output directory ---
-OUT_DIR=$PROJECT_DIR/files/ocr
+OUT_DIR="$PROJECT_DIR/files/ocr"
 echo "Output dir: $OUT_DIR"
 
 
@@ -23,7 +23,8 @@ inputImages=$(ls -1 $IMG_DIR | grep ".jpg")
 for image in $inputImages
 do
 	echo "Scanning image $image"
-	sudo python process.py --out $PROJECT_DIR/files/labels $image
+	echo "    image in directory $IMG_DIR"
+	sudo python process.py -v -I --out $PROJECT_DIR/files/labels $image
 done
 
 
