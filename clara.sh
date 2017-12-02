@@ -23,8 +23,7 @@ inputImages=$(ls -1 $IMG_DIR | grep ".jpg")
 for image in $inputImages
 do
 	echo "Scanning image $image"
-	echo "    image in directory $IMG_DIR"
-	sudo python process.py -v -I --out $PROJECT_DIR/files/labels $image
+	sudo python process.py --out $PROJECT_DIR/files/labels $image
 done
 
 
