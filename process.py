@@ -85,7 +85,7 @@ def postprocess(image):
 	width = image.shape[1]
 	height= image.shape[0]
 	white = (200,200,200)
-	boxed = cv2.rectangle(resized, (0,0), (width,height), white, 100)
+	boxed = cv2.rectangle(image, (0,0), (width,height), white, 100)
 
 	resized = imutils.resize(boxed, width=200)
 	printverb (" - - Converting to greyscale...")
