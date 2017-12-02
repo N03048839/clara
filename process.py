@@ -31,7 +31,8 @@ def printverb(string):
 def showImage(image, title):
 	if SHOW_IMAGE:	
 		printstd('SHOWIMAGE: displaying image ' + title)
-		w = 200 if image.shape[0] > 200 else image.shape[0]
+		w = MAX_WIDTH if image.shape[0] > MAX_WIDTH \
+			else image.shape[0]
 		imresize = imutils.resize(image, width=w)
 		cv2.imshow(title, imresize)
 		cv2.waitKey(0)			# Pause for any keystroke
