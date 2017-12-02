@@ -98,7 +98,7 @@ def postprocess(image):
 	#thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
 	#printverb (" - - Thresholding...done")
 
-	return thresh
+	return gray
 	
 def writelabels(labels, imagename):
 	for i in range(0, len(labels)):
