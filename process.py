@@ -82,26 +82,25 @@ def preprocess(image):
 	
 # Prepare a (color) label for OCR output	
 def postprocess(image):
-	resized = imutils.resize(image, width=200)
-	
 	width = image.shape[1]
 	height= image.shape[0]
-	white = (255,255,255)
-	boxed = cv2.rectangle(resized, (0,0), (width,height), white, 10)
+	white = (200,200,200)
+	boxed = cv2.rectangle(resized, (0,0), (width,height), white, 100)
 
+	resized = imutils.resize(boxed, width=200)
 	printverb (" - - Converting to greyscale...")
 	gray = cv2.cvtColor(boxed, cv2.COLOR_BGR2GRAY)
 	printverb (" - - Converting to greyscale...done")
 	
-	blur = cv2.medianBlur(gray, 3)
+	#blur = cv2.medianBlur(gray, 3)
 	
-	printverb (" - - Thresholding... ")
-	thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
-	printverb (" - - Thresholding...done")
+	#printverb (" - - Thresholding... ")
+	#thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
+	#printverb (" - - Thresholding...done")
 
 	return thresh
 	
-def writelabels(labels):
+def writelabels(labels, imagename):
 	for i in range(0, len(labels)):
 		fn = OUT_DIR + "/" + imagename + "_out" + str(i) + ".png"
 		printstd(" - Writing output to file \'" + fn + "\'")
@@ -119,7 +118,7 @@ def main(imagename):
 	LD = LabelDetector()
 	labels = LD.detectLabels(img, ppi, ratio)
 	printstd(" Label regions found: " + str(len(labels)))
-	writelabels(labels)
+	writelabels(labels, imagename)
 	return
 	
 	 
