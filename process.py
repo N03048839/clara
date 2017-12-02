@@ -86,18 +86,18 @@ def postprocess(image):
 	
 	width = image.shape[1]
 	height= image.shape[0]
-	white = (255,255,255)
-	boxed = cv2.rectangle(resized, (0,0), (width,height), white, 10)
+	white = (200,200,200)
+	boxed = cv2.rectangle(resized, (0,0), (width,height), white, 100)
 
 	printverb (" - - Converting to greyscale...")
 	gray = cv2.cvtColor(boxed, cv2.COLOR_BGR2GRAY)
 	printverb (" - - Converting to greyscale...done")
 	
-	blur = cv2.medianBlur(gray, 3)
+	#blur = cv2.medianBlur(gray, 3)
 	
-	printverb (" - - Thresholding... ")
-	thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
-	printverb (" - - Thresholding...done")
+	#printverb (" - - Thresholding... ")
+	#thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
+	#printverb (" - - Thresholding...done")
 
 	return thresh
 	
