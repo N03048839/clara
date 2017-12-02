@@ -80,6 +80,37 @@ def preprocess(image):
 	printverb (" - Thresholding...done")
 	return thresh
 	
+# Prepare a (color) label for OCR output	
+def postprocess(image):
+	resized = imutils.resize(image, width=200)
+	
+	width = image.shape[1]
+	height= image.shape[0]
+	white = (255,255,255)
+	boxed = cv2.rectangle(resized, (0,0), (width,height), white, 10)
+
+	printverb (" - - Converting to greyscale...")
+	gray = cv2.cvtColor(boxed, cv2.COLOR_BGR2GRAY)
+	printverb (" - - Converting to greyscale...done")
+	
+	blur = cv2.medianBlur(gray, 3)
+	
+	printverb (" - - Thresholding... ")
+	thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
+	printverb (" - - Thresholding...done")
+
+	return thresh
+	
+def writelabels(labels):
+	for i in range(0, len(labels)):
+		fn = OUT_DIR + "/" + imagename + "_out" + str(i) + ".png"
+		printstd(" - Writing output to file \'" + fn + "\'")
+		printverb(" - - Applying post processing to label...")
+		lblProc = postprocess(labels[i])
+		printverb(" - - Applying post processing...done")
+		cv2.imwrite(fn, lblProc)
+		printverb(" - Writing output to file...done")
+	return
 	
 # Process an image.
 def main(imagename):
@@ -88,12 +119,7 @@ def main(imagename):
 	LD = LabelDetector()
 	labels = LD.detectLabels(img, ppi, ratio)
 	printstd(" Label regions found: " + str(len(labels)))
-	for i in range(0, len(labels)):
-		fn = OUT_DIR + "/" + imagename + "_out" + str(i) + ".png"
-		printstd(" - Writing output to file \'" + fn + "\'")	
-		cv2.imwrite(fn, labels[i])
-		printverb(" - Writing output to file...done")
-		
+	writelabels(labels)
 	return
 	
 	 
