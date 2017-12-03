@@ -12,7 +12,7 @@ SHOW_IMAGE = False
 NORESIZE = False
 
 GAUSS_SIZE = 5     # size of blur filter. must be odd. '5' recommended
-THRESH_VAL = 150   # min pixel brightness to be considered white. (0-255)
+THRESH_VAL = 170   # min pixel brightness to be considered white. (0-255)
 MAX_WIDTH = 500	   # images larger than this are downscaled to be this size
 
 # Used to supress console output. Replaces standard 'print' command.
@@ -40,7 +40,7 @@ def showImage(image, title):
 	return
 	
 def loadimage(imagename):
-	printstd("\n========= Image: %s =====" % imagename)
+	print("\n========= Image: %s =====" % imagename)
 	printverb(" - Loading image...")
 	image = cv2.imread(imagename)
 	try:
@@ -53,17 +53,18 @@ def loadimage(imagename):
 		raise IOError("Image " + imagename + " load error!")
 		
 	
-	if (width_org > MAX_WIDTH) and NORESIZE:
+	if (width_org > MAX_WIDTH) and False:
 		printverb (" - Resizing image...")
 		resized = imutils.resize(image, width=MAX_WIDTH)
 		ratio = float(height_org) / float(resized.shape[0])
 		printverb (" - Resizing image...done")
-		print ("      [W: " + str(resized.shape[1]) 
-				+ "  H: " + str(resized.shape[0]) + "]")
+		
 	else:
 		resized = image
 		ratio = 1.0 
-	
+		
+	printstd ("      [W: " + str(resized.shape[1]) 
+				+ "  H: " + str(resized.shape[0]) + "]")
 	showImage(resized, "original")
 	return resized, ratio
 	
@@ -82,23 +83,25 @@ def preprocess(image):
 	
 # Prepare a (color) label for OCR output	
 def postprocess(image):
+	
 	width = image.shape[1]
 	height= image.shape[0]
-	white = (200,200,200)
-	boxed = cv2.rectangle(image, (0,0), (width,height), white, 100)
+	printverb(" - - - Postprocessing label: " + str(width) + "x" + str(height))
+	white = (230,230,230)
+	boxed = cv2.rectangle(image, (0,0), (width,height), white, 40)
 
 	resized = imutils.resize(boxed, width=200)
 	printverb (" - - Converting to greyscale...")
-	gray = cv2.cvtColor(boxed, cv2.COLOR_BGR2GRAY)
+	gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
 	printverb (" - - Converting to greyscale...done")
 	
-	#blur = cv2.medianBlur(gray, 3)
+	blur = cv2.medianBlur(gray, 3)
 	
-	#printverb (" - - Thresholding... ")
-	#thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
-	#printverb (" - - Thresholding...done")
+	printverb (" - - Thresholding... ")
+	thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
+	printverb (" - - Thresholding...done")
 
-	return gray
+	return thresh
 	
 def writelabels(labels, imagename):
 	for i in range(0, len(labels)):

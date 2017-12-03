@@ -73,5 +73,6 @@ class LabelDetector:
 				if h > (image.shape[0] / 6):
 					#box = cv2.rectangle(image, (x,y), (x+w,y+h), (255,255,255), 2)
 					lbl = image[y : y+h, x : x+w]
+					printverb(" - - - Adding label: " + str(lbl.shape[1]) + "x" + str(lbl.shape[0]))
 					labels.append(lbl)
 		return labels
