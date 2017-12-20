@@ -18,8 +18,8 @@ echo "Output dir: $OUT_DIR"
 cd $PROJECT_DIR
 
 
-# --- Process input images and extract call number regions
-inputImages=$(ls -1 $IMG_DIR | grep ".jpg")
+# --- Process png images and extract call number regions
+inputImages=$(ls -1 $IMG_DIR | grep ".png")
 for image in $inputImages
 do
 	echo "Scanning image $image"
@@ -38,3 +38,22 @@ do
 	cat $OUT_DIR/$label.txt
 done
 
+# --- Process jpg images and extract call number regions
+inputImages=$(ls -1 $IMG_DIR | grep ".jpg")
+for image in $inputImages
+do
+	echo "Scanning image $image"
+	sudo python process.py --out $PROJECT_DIR/files/labels $image
+done
+
+
+# --- perform OCR on each processed label
+labels=$(ls -1 $LABEL_DIR | grep ".png")
+for label in $labels
+do
+	echo " === Analyzing image $LABEL_DIR/$label..."
+	sudo tesseract $PROJECT_DIR/files/labels/$label $PROJECT_DIR/files/ocr/$label
+	echo "Output saved to $label.txt"
+	
+	cat $OUT_DIR/$label.txt
+done
