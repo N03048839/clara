@@ -1,5 +1,19 @@
 #!/bin/bash
 
+# This is the fifth of five scripts that install CLARA on a
+# Raspberry Pi, assumed to be running Raspbian Stretch. 
+#
+# They _should_ work in other Raspbian environments, but have not
+# been tested. Proceed at your own risk.
+# 
+# For more information, read the guide below:
+# https://www.pyimagesearch.com/2017/09/04/raspbian-stretch-install-opencv-3-python-on-your-raspberry-pi/
+# 
+# Note that this installation is left deliberately incomplete. After running this script,
+# follow the procedure given in the above guide for 'Step 5: Compile and Install OpenCV' 
+# using the instructions for Python 3.
+
+
 source ~/.profile
 workon cv
 
